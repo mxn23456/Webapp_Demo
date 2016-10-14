@@ -1,0 +1,106 @@
+<div class="container">
+  <div class="row">
+    <div class="well">
+      <h3 align="center"><%= @inv.inv_desc %></h3>
+
+      <p align="center">
+      <% if @inv.image.exists? %>
+        <%= image_tag @inv.image.url(:medium)%>
+      <% else %>
+        <%= image_tag "http://placehold.it/250x250" %>
+        <div class="span7 text-center">
+          <%= form_for @inv, url: update_inv_image_path, html: { multipart: true } do |f| %>
+            <div align="center" class="field" >
+              <%= f.file_field :image %>
+            </div>
+            </br>
+            <%= hidden_field_tag 'id', @inv.id %>
+            <%= hidden_field_tag 'user_id', current_user.id %>
+            <div align="center" class="action">
+              <%= f.submit("Save Image", id: "image_submit") %>
+            </div>
+          </div>
+        <% end %> 
+      </div>
+    <% end %> 
+    </p>
+  </div> <!-- /well -->
+
+  <div class="container">
+    <div class="well">
+      <div align="center">
+        <h3 align="center">New Transaction</h3>
+        <%= form_for(@new_tran,html: {multipart: true}, url: post_inv_tran_path) do |f| %>
+          Amount</br>
+          <%= f.number_field :amount %> </br>
+          Description</br>
+          <%= f.text_field :transaction_desc %> </br>
+          <%= f.date_select :transaction_date%> </br>
+          <%= hidden_field_tag 'user_id', current_user.id %>
+          <%= hidden_field_tag 'inv_id', @inv.id %>
+          <%= f.submit("Save",id: "trans_submit") %>
+        <% end %>
+      </div>
+    </div>
+  </div> <!--/container-->
+
+  <!-- <div class="well"> -->
+    <h1 align="center">Transactions </h1>
+    <div class="table-responsive">
+      <table class="table ">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Description</th>
+            <th colspan="1"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- The following code makes the rows grouped by months -->
+          <% @total = 0 %>
+          <% if @inv.inv_trans.first.transaction_date != nil then %>
+            <% @prev_month = @inv.inv_trans.first.transaction_date.month %>
+          <% end%>
+          <% @shaded = "info" %>
+          <% @unshaded = "danger" %>
+          <% @current_condition = @shaded %>
+          <% @inv.inv_trans.all.each do |inv_tran| %>
+            <% if inv_tran.transaction_date.month != @prev_month %>
+              <% if @current_condition == @shaded %>
+                <% @current_condition = @unshaded %>
+              <% else %>
+                <% @current_condition = @shaded %>
+              <% end %>
+            <% end %>
+            <tr class= <%= @current_condition %> >
+              <td><%= inv_tran.transaction_date %></td>
+              <td><%= inv_tran.amount %></td>
+              <td><%= inv_tran.transaction_desc %></td>
+              <% @total = @total + inv_tran.amount %>
+            </tr>
+            <% @prev_month = inv_tran.transaction_date.month %>
+          <% end %>
+        </tbody>
+      </table>
+      <br>
+      <div align="center">
+        <p><strong>Total</strong></p>
+        <p><%= @total %></p>
+      </div>
+    </div> <!--/table-responsive-->
+
+    <% if @inv.notes %>
+      <% if !@inv.notes.empty? %>
+        <%= content_tag(:p,content_tag(:strong,"Notes")) %>
+        <%= content_tag(:p, @inv.notes) %>
+      <% end %>
+    <% end %>
+
+    <div align="right">
+      <%= link_to 'Back', user_invs_path(current_user) %> |
+      <%= link_to 'Delete', user_inv_delete_inv_path(current_user, @inv), method: :delete %>
+    </div>
+  </div> <!-- /row -->
+</div> <!-- /container -->

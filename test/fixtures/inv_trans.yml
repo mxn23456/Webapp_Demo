@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  amount: 1
+  transaction_desc: MyString
+  transaction_date: 2015-10-21
+  investment_id: 1
+
+two:
+  amount: 1
+  transaction_desc: MyString
+  transaction_date: 2015-10-21
+  investment_id: 1

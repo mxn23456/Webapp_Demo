@@ -1,0 +1,61 @@
+/*
+ * what we want to continue doing is:
+ *	a) get the text response in json in which we get all of the transactions for this month
+ *	b) then we convert the json text to actual json
+ *   c) then we loop through each transaction entry and perform summation of expense or income
+ */
+function updateCashFlow(year,month){
+	var request = new XMLHttpRequest();
+
+	request.onreadystatechange = function() {
+		if (request.readyState == 4 && request.status == 200) {
+			//document.getElementById("demo").innerHTML = xhttp.responseText;
+			var trans = JSON.parse(request.responseText);
+
+			var income = 0;
+			var expense = 0;
+			var net = 0;
+			for(i=0; i<Object.keys(trans).length; i++){
+				if (trans[i].amount < 0)
+					expense = expense + trans[i].amount;
+				else
+					income = income + trans[i].amount;
+			}
+			net = income + expense;
+			//alert('income: '+income+'; expense: '+expense+'; net: '+net);
+			document.getElementById("monthly_income").innerHTML = income;
+			document.getElementById("monthly_expense").innerHTML = expense;
+			document.getElementById("monthly_net").innerHTML = net;
+		}
+	}
+	request.open("post", "invs/get_month_of_year_transactions.json");
+	var formData = new FormData();
+	request.setRequestHeader("Content-type", "application/json");
+	var formData = '{"cash_flow":{"month":'+month+',"year":'+year+'}}';
+	request.send(formData);
+}
+
+/* 
+   behaviors for the page once the page is loaded
+ */
+$(document).ready(function() {
+	//The following function toggle the highlight of the click  button on and makes the others go off
+	$('#navSidebar li').click(function() {
+		$(this).toggleClass('active');
+		//set the  other classes inactive
+		$(this).siblings().attr( "class", "" );	
+	});
+	//make carousel not sliding
+	$('#myCarousel').carousel({
+		interval: false
+	});
+	//submit button at inv_tran behavior
+	$('#trans_submit').click(function(){
+		//alert("hello");
+		//location.reload();
+		setTimeout(function(){ location.reload(); }, 1000);
+		});
+
+})
+
+

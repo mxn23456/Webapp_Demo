@@ -1,0 +1,34 @@
+<%#= form_for @inv_tran, url:inv_inv_trans_path(:user_id => current_user.id, :inv_id => @inv.id) do |f| %>
+  <%= form_for @inv_tran, :controller => "inv_trans", :action => "create"  do |f| %>
+  <% if @inv_tran.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@inv_tran.errors.count, "error") %> prohibited this inv_tran from being saved:</h2>
+
+      <ul>
+      <% @inv_tran.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :amount %><br>
+    <%= f.number_field :amount %>
+  </div>
+  <div class="field">
+    <%= f.label :transaction_desc %><br>
+    <%= f.text_field :transaction_desc %>
+  </div>
+  <div class="field">
+    <%= f.label :transaction_date %><br>
+    <%= f.date_select :transaction_date %>
+  </div>
+  <div class="field">
+    <%= f.label :inv_id %><br>
+    <%= f.number_field :inv_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

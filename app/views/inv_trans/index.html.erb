@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="col-md-12">
+    <p id="notice"><%= notice %></p>
+
+    <h1>Listing Inv Trans</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Amount</th>
+          <th>Transaction desc</th>
+          <th>Transaction date</th>
+          <th>Investment</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @inv_trans.each do |inv_tran| %>
+          <tr>
+            <td><%= inv_tran.amount %></td>
+            <td><%= inv_tran.transaction_desc %></td>
+            <td><%= inv_tran.transaction_date %></td>
+            <td><%= inv_tran.inv_id %></td>
+            <td><%= link_to 'Show', inv_inv_tran_path(@inv,inv_tran) %></td>
+            <td><%= link_to 'Edit', edit_inv_inv_tran_path(@inv,inv_tran) %></td>
+            <td><%= link_to 'Destroy', inv_inv_tran_path(@inv,inv_tran), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <br>
+
+    <%= link_to 'New Inv tran', new_inv_inv_tran_path(@inv) %>
+
+  </div>
+</div>

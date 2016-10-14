@@ -1,0 +1,31 @@
+
+<%= form_for @user_inv, html: {multipart: true},url: post_inv_path do |f| %>
+  <% if @user_inv.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_inv.errors.count, "error") %> prohibited this inv from being saved:</h2>
+
+      <ul>
+        <% @user_inv.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div align="center" class="field">
+    <%= f.label :image%><br>
+    <%= f.file_field :image%>
+  </div>
+
+  <div class="field">
+    <%= f.label :inv_desc %><br>
+    <%= f.text_field :inv_desc %>
+  </div>
+  <div class="field">
+    <%= f.label :notes %><br>
+    <%= f.text_area :notes %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

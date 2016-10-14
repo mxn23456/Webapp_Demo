@@ -1,0 +1,28 @@
+<%= form_for(@image, method: :post, url:inv_images_path(params[:inv_id])) do |f| %>
+<% if @image.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@image.errors.count, "error") %> prohibited this image from being saved:</h2>
+
+	<ul>
+		<% @image.errors.full_messages.each do |message| %>
+		<li><%= message %></li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
+
+<div class="field">
+	<%= f.label :image %><br>
+	<%= f.file_field :image %>
+</div>
+
+<div class="field">
+	<%= f.label :inv_id %><br>
+	<%= f.number_field :inv_id %>
+</div>
+<div class="actions">
+	<%= f.submit %>
+</div>
+<% end %>
+
+
