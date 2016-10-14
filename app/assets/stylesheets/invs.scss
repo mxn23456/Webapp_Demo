@@ -1,0 +1,16 @@
+// Place all the styles related to the Invs controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.carousel-inner
+  .active.left
+    left: -25%
+  .next
+    left: 25%
+  .prev
+    left: -25%
+
+.carousel-control
+  width: 4%
+  &.left, &.right
+    margin-left: 15px
+    background-image: none

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to Minh X Nguyen's Page</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Minh X Nguyen</a>
+
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><%= link_to 'Home', root_path%></li>
+          <li><%= if current_user.present? then  link_to 'Project', user_invs_path(current_user) end  %>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+          <li><%= link_to root_path do %>
+            <span class="glyphicon glyphicon-user"></span> Logged in as <%= current_user.email %>
+          <% end %>
+          </li>
+          <li><%= link_to destroy_user_session_path, :method => :delete do %>
+            <span class="glyphicon glyphicon-log-out"></span> Logout 
+          <% end %>
+          </li>
+        <% else %>
+          <li>
+          <%= link_to new_user_session_path do %>
+            <span class="glyphicon glyphicon-log-in"></span> Login
+          <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+  </nav>
+
+
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+
+  <%= yield %>
+
+</body>
+</html>

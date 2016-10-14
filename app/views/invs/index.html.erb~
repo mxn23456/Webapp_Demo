@@ -1,0 +1,189 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-3 col-md-2 sidebar">
+			<ul class="nav nav-sidebar" id="navSidebar">
+				<li class="active" id= "overview_link"><a href="#main">Overview </a></li>
+				<li id="reports_link"><a href="#reports_content">Reports<span class="sr-only">(current)</span></a></li>
+				<li id="analytics_link"><a href="#analytics_content">Analytics</a></li>
+				<li id="export_link"><a href="#export_content">Export</a></li>
+			</ul>
+			<!--			<ul class="nav nav-sidebar">
+				<li><a href="">Nav item</a></li>
+				<li><a href="">Nav item again</a></li>
+				<li><a href="">One more nav</a></li>
+				<li><a href="">Another nav item</a></li>
+				<li><a href="">More navigation</a></li>
+			</ul>
+			<ul class="nav nav-sidebar">
+				<li><a href="">Nav item again</a></li>
+				<li><a href="">One more nav</a></li>
+				<li><a href="">Another nav item</a></li>
+			</ul>
+-->
+		</div>
+
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="main">
+			<h1 class="page-header">Dashboard</h1>
+			<h2 class="sub-header">Recent Activities</h2>
+
+			<!--
+
+
+			<div class="container">
+				<div class="col-md-12">
+					<div class="well">
+						<div id="myCarousel" class="carousel slide">
+							<div class="carousel-inner">
+								<% currentIndex = 0 %>
+								<div class="item active">
+									<div class="row">
+										<% while currentIndex < 4 %>
+   <div class="col-sm-3">
+											<% if @last8Invs[currentIndex].image.exists? %>
+   <%= image_tag @last8Invs[currentIndex].image.url(:medium) %>
+											<% else %>
+   <a href="#"><img src="http://placehold.it/500/f477f4/fff&amp;text=6" class="img-responsive"></a>
+											<% end %> 
+										</div>
+										<% currentIndex = currentIndex + 1 %>
+										<% end %>
+									</div>
+								</div>
+								<div class="item">
+									<div class="row">
+										<% while currentIndex < 8 %>
+   <div class="col-sm-3"><%= image_tag @last8Invs[currentIndex].image.url(:medium) %>
+										</div>
+										<% currentIndex = currentIndex + 1 %>
+										<% end %>
+									</div>
+								</div>
+							</div>
+							<a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+							<a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+						</div>
+						<!--/myCarousel-->
+		</div>
+		<!--/well-->
+	</div>
+</div>
+
+-->
+
+
+<div class="container">
+	<h3>Bootstrap 3 Multiple Slide Carousel</h3>
+	<div class="col-md-6 col-md-offset-3">
+		<div class="carousel slide" id="myCarousel">
+			<div class="carousel-inner">
+				<div class="item active">
+					<div class="col-sm-3"><a href="#"><img src="http://placehold.it/500/e499e4/fff&amp;text=1" class="img-responsive"></a></div>
+				</div>
+				<div class="item">
+					<div class="col-sm-3"><a href="#"><img src="http://placehold.it/500/e477e4/fff&amp;text=2" class="img-responsive"></a></div>
+				</div>
+				<div class="item">
+					<div class="col-sm-3"><a href="#"><img src="http://placehold.it/500/eeeeee&amp;text=3" class="img-responsive"></a></div>
+				</div>
+				<div class="item">
+					<div class="col-sm-3"><a href="#"><img src="http://placehold.it/500/f4f4f4&amp;text=4" class="img-responsive"></a></div>
+				</div>
+				<div class="item">
+					<div class="col-sm-3"><a href="#"><img src="http://placehold.it/500/f566f5/333&amp;text=5" class="img-responsive"></a></div>
+				</div>
+				<div class="item">
+					<div class="col-sm-3"><a href="#"><img src="http://placehold.it/500/f477f4/fff&amp;text=6" class="img-responsive"></a></div>
+				</div>
+				<div class="item">
+					<div class="col-sm-3"><a href="#"><img src="http://placehold.it/500/eeeeee&amp;text=7" class="img-responsive"></a></div>
+				</div>
+				<div class="item">
+					<div class="col-sm-3"><a href="#"><img src="http://placehold.it/500/fcfcfc/333&amp;text=8" class="img-responsive"></a></div>
+				</div>
+			</div> <!--end carousel-inner -->
+		</div> <!---end carousel slide -->
+		<a class="left carousel-control" href="#myCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+		<a class="right carousel-control" href="#myCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+	</div> <!---end "col-md-6 col-md-offset-3" --> 
+</div> <!-- end container -->
+
+
+
+<h2 class="sub-header" id="month_year_selector">Cash Flow for 
+	<%= select_month(Date.today, options = {},
+					 html_options = {:onchange => "updateCashFlow($('#date_year option:selected').val(), $('#date_month option:selected').val())"}) %>
+				 <%= select_year(Date.today, options = {start_year: 2000, end_year: 2020},html_options = {:onchange => "updateCashFlow($('#date_year option:selected').val(), $('#date_month option:selected').val())"}) %>
+				 </h2>
+				 <% @currentMonthTrans = InvTran.getMonthOfYearTrans(Date.today.month, Date.today.year) %>
+				 <% @income=0 %>
+				 <% @expense=0 %>
+				 <%	@net=0 %>
+				 <%	@currentMonthTrans.each do |tran| %>
+					 <%		if(tran.amount >= 0) %>
+					 <%			@income += tran.amount%>
+			 <%		else %>
+					 <%			@expense += tran.amount %>
+			 <%		end %>
+				 <%		@net= @income + @expense %>
+			 <%	end %> 
+				 <div class="table-responsive">
+					 <table class="table table-striped" id="cash_flow_table">
+						 <thead>
+							 <tr>
+								 <th>Income</th>
+								 <th>Expense</th>
+								 <th>Net</th>
+							 </tr>
+						 </thead>
+						 <tbody>
+						 <tr>
+							 <td id="monthly_income"><%= @income %></td>
+							 <td id="monthly_expense"><%= @expense %> </td>
+							 <td id="monthly_net"><%= @net %></td>
+						 </tr>
+						 </tbody>
+					 </table>
+				 </div>
+
+				 <h2 class="sub-header">Listing of Investments</h2>
+				 <div class="table-responsive" id="invs_all">
+					 <table class="table table-striped">
+						 <thead>
+							 <tr>
+								 <th>#</th>
+								 <th>Investment desc</th>
+								 <th>Net Cash Flow</th>
+								 <th colspan="1"></th>
+							 </tr>
+						 </thead>
+						 <tbody>
+						 <% num=1 %>
+						 <% @invs.each do |investment| %>
+							 <tr>
+							 <td><%= num %></td>
+							 <td><%= investment.inv_desc %></td>
+							 <td><%= investment.inv_trans.sum("amount") %></td>
+							 <td><%= link_to 'Details', investment %></td>
+							 <% num = num + 1 %>
+						 </tr>
+					 <% end %>
+						 </tbody>
+					 </table>
+				 </div>
+			 </div>
+
+			 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="reports_content">
+				 <p> Contents for report tabs goes here </p>
+			 </div>
+
+			 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="analytics_content">
+				 <p> Contents for analytics tabs goes here </p>
+			 </div>
+
+			 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="export_content">
+				 <p> Contents for export tabs goes here </p>
+			 </div>
+
+		 </div>
+	 </div>
+

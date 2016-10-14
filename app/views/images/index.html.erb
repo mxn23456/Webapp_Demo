@@ -1,0 +1,32 @@
+<h1>Images#index</h1>
+
+
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Images</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Inv Id</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @images.each do |image| %>
+      <tr>
+        <td><%= image_tag image.image.url(:medium) %></td>
+        <td><%= image.inv_id %></td>
+        <td><%= link_to 'Show', inv_image_path(@inv,image) %></td>
+        <td><%= link_to 'Edit', edit_inv_image_path(@inv,image) %></td>
+        <td><%= link_to 'Destroy', inv_image_path(@inv,image), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Image', new_inv_image_path(@inv) %>
