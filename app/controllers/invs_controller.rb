@@ -29,9 +29,11 @@ class InvsController < ApplicationController
 
   def save_image
     @user_inv = current_user.invs.find(params[:id])
-    result = @user_inv.update(:image => params["inv"]["image"])
-    respond_to do |format|
-      format.html { redirect_to user_inv_path(current_user,@user_inv), notice: 'Image was successfully updated'} 
+    if params["inv"] != nil
+      @user_inv.update(:image => params["inv"]["image"])
+      redirect_to user_inv_path(current_user,@user_inv), notice: 'Image was successfully updated'
+    else
+      redirect_to user_inv_path(current_user,@user_inv), notice: 'Please choose an image'
     end
   end
 
